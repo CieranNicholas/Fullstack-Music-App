@@ -1,5 +1,20 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Important Stripe Info
+
+While in development, you need to make sure the stripe CLI is running so that supabase stays linked with stripe.
+
+```bash
+# Not always needed if your login session is still valid
+stripe login
+
+# Forward events your webhook
+stripe listen --forward-to localhost:3000/api/webhooks
+
+# Finally check if it's working by running:
+stripe trigger payment_intent.succeeded
+```
+
 ## Getting Started
 
 First, run the development server:
