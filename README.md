@@ -4,6 +4,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 While in development, you need to make sure the stripe CLI is running so that supabase stays linked with stripe.
 
+from-bg-neutral-900
+from-bg-neutral-900
+from-bg-neutral-900
+from-bg-neutral-900
+
 ```bash
 # Not always needed if your login session is still valid
 stripe login
