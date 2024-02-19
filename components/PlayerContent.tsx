@@ -106,20 +106,30 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
   };
 
   return (
-    <div className='grid grid-cols-2 md:grid-cols-3 h-full'>
+    <div className='grid grid-cols-2 md:grid-cols-3 h-full relative'>
       <div className='flex w-full justify-start'>
         <div className='flex items-center gap-x-4'>
           <MediaItem data={song} />
           <LikeButton songId={song.id} />
         </div>
       </div>
-      <div className='flex md:hidden col-auto w-full justify-end items-center'>
+      <div className='flex md:hidden col-auto w-full justify-end items-center gap-4'>
+        <AiFillStepBackward
+          size={30}
+          onClick={onPlayPrevious}
+          className='text-neutral-400 cursor-pointer hover:text-white transition'
+        />
         <div
           onClick={handlePlay}
           className='h-10 w-10 flex items-center justify-center rounded-full bg-white p-1 cursor-pointer'
         >
           <Icon size={30} className='text-black' />
         </div>
+        <AiFillStepForward
+          size={30}
+          onClick={onPlayNext}
+          className='text-neutral-400 cursor-pointer hover:text-white transition'
+        />
       </div>
       <div className='hidden h-full md:flex md:flex-col'>
         <div className="className='hidden h-full md:flex justify-center items-center w-full max-w-[722px] gap-x-6">
@@ -160,6 +170,17 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
           <Slider value={volume} onChange={(value) => setVolume(value)} />
         </div>
       </div>
+      {/* Mobile Trackbar */}
+      <Trackbar
+        mobile
+        position={position}
+        duration={sound ? sound.duration() : 0}
+        onPositionChange={(position) => {
+          if (sound) {
+            sound.seek(position);
+          }
+        }}
+      />
     </div>
   );
 };
