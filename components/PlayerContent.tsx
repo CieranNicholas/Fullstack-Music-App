@@ -106,7 +106,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
   };
 
   return (
-    <div className='grid grid-cols-2 md:grid-cols-3 h-full relative'>
+    <div className='flex h-full items-center relative'>
       <div className='flex w-full justify-start'>
         <div className='flex items-center gap-x-4'>
           <MediaItem data={song} />
@@ -131,7 +131,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
           className='text-neutral-400 cursor-pointer hover:text-white transition'
         />
       </div>
-      <div className='hidden h-full md:flex md:flex-col'>
+      <div className='hidden h-full md:flex md:flex-col w-full'>
         <div className="className='hidden h-full md:flex justify-center items-center w-full max-w-[722px] gap-x-6">
           <AiFillStepBackward
             size={20}
