@@ -24,7 +24,7 @@ const ListItem: React.FC<ListItemProps> = ({ image, name, href }) => {
         <Image className='object-cover' fill src={image} alt='Image' />
       </div>
       <p className='font-medium truncate py-5'>{name}</p>
-      <div className='absolute transition opacity-0 rounded-full flex items-center justify-center bg-green-500 p-4 drop-shadow-md right-5 group-hover:opacity-100 hover:scale-x-110'>
+      <div className='absolute transition opacity-0 rounded-full flex items-center justify-center bg-brand p-4 drop-shadow-md right-5 group-hover:opacity-100 hover:scale-x-110'>
         <FaPlay className='text-black' />
       </div>
     </button>

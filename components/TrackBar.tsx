@@ -51,7 +51,7 @@ const TrackBar: React.FC<TrackBarProps> = ({
             ref={trackRef}
           >
             <div
-              className='h-full bg-white rounded  group-hover:bg-green-500'
+              className='h-full bg-white rounded  group-hover:bg-brand'
               style={{ width: `${percentage}%` }}
             />
           </div>
@@ -67,7 +67,7 @@ const TrackBar: React.FC<TrackBarProps> = ({
             ref={trackRef}
           >
             <div
-              className='h-full bg-white rounded  group-hover:bg-green-500'
+              className='h-full bg-white rounded  group-hover:bg-brand'
               style={{ width: `${percentage}%` }}
             />
           </div>
