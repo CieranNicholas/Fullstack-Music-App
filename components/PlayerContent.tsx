@@ -11,6 +11,7 @@ import MediaItem from "./MediaItem";
 import LikeButton from "./LikeButton";
 import Slider from "./Slider";
 import usePlayer from "@/hooks/usePlayer";
+import Trackbar from "./TrackBar";
 
 interface PlayerContentProps {
   song: Song;
@@ -53,21 +54,40 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     player.setId(previousSong);
   };
 
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+  const [position, setPosition] = useState(0);
+
   const [play, { pause, sound }] = useSound(songUrl, {
     volume: volume,
-    onplay: () => setIsPlaying(true),
+    onplay: () => {
+      setIsPlaying(true);
+    },
     onend: () => {
       setIsPlaying(false);
       onPlayNext();
+      if (intervalId) clearInterval(intervalId);
     },
-    onpause: () => setIsPlaying(false),
+    onpause: () => {
+      setIsPlaying(false);
+      if (intervalId) clearInterval(intervalId);
+    },
     format: ["mp3"],
   });
 
   useEffect(() => {
     sound?.play();
+    const id = setInterval(() => {
+      if (sound) {
+        setPosition(sound?.seek());
+      }
+    }, 1000);
+    setIntervalId(id);
     return () => sound?.unload();
   }, [sound]);
+
+  useEffect(() => {
+    console.log("position", position);
+  }, [position]);
 
   const handlePlay = () => {
     if (!isPlaying) {
@@ -101,23 +121,33 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
           <Icon size={30} className='text-black' />
         </div>
       </div>
-
-      <div className='hidden h-full md:flex justify-center items-center w-full max-w-[722px] gap-x-6'>
-        <AiFillStepBackward
-          size={30}
-          onClick={onPlayPrevious}
-          className='text-neutral-400 cursor-pointer hover:text-white transition'
-        />
-        <div
-          className='flex items-center justify-center h-10 w-10 rounded-full bg-white p-1 cursor-pointer'
-          onClick={handlePlay}
-        >
-          <Icon size={30} className='text-black' />
+      <div className='hidden h-full md:flex md:flex-col'>
+        <div className="className='hidden h-full md:flex justify-center items-center w-full max-w-[722px] gap-x-6">
+          <AiFillStepBackward
+            size={20}
+            onClick={onPlayPrevious}
+            className='text-neutral-400 cursor-pointer hover:text-white transition'
+          />
+          <div
+            className='flex items-center justify-center h-7 w-7 rounded-full bg-white p-1 cursor-pointer'
+            onClick={handlePlay}
+          >
+            <Icon size={30} className='text-black' />
+          </div>
+          <AiFillStepForward
+            size={20}
+            onClick={onPlayNext}
+            className='text-neutral-400 cursor-pointer hover:text-white transition'
+          />
         </div>
-        <AiFillStepForward
-          size={30}
-          onClick={onPlayNext}
-          className='text-neutral-400 cursor-pointer hover:text-white transition'
+        <Trackbar
+          position={position}
+          duration={sound ? sound.duration() : 0}
+          onPositionChange={(position) => {
+            if (sound) {
+              sound.seek(position);
+            }
+          }}
         />
       </div>
       <div className='hidden md:flex w-full justify-end pr-2'>
@@ -125,7 +155,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
           <VolumeIcon
             onClick={toggleMute}
             className='cursor-pointer'
-            size={34}
+            size={20}
           />
           <Slider value={volume} onChange={(value) => setVolume(value)} />
         </div>
