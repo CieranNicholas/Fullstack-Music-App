@@ -14,8 +14,11 @@ import getActiveProductsWithPrices from "@/actions/getActiveProductsWithPrices";
 const font = Figtree({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Music App",
-  description: "Listen to music!",
+  title: "Cadence",
+  description: "Stream and upload music",
+  icons: {
+    icon: "/images/favicon.ico",
+  },
 };
 
 export const revalidate = 0;
